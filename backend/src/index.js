@@ -17,7 +17,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser())
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"/",
     credentials:true
 }))
 
@@ -25,10 +25,12 @@ app.use('/api/auth',authRoutes)
 app.use('/api/messages',messageRoutes)
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  const frontendPath = path.join(__dirname, "../frontend/dist");
 
-  app.get("(.*)", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
+  app.use(express.static(frontendPath));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 

@@ -6,21 +6,21 @@ import { getCroppedImg } from "../utils/cropImage";
 
 
 const ProfilePage = () => {
-  const {authUser,isUpdatingProfile,updateProfile} = useAuthStore();
-  const [selectedItem,setSelectedItem] = useState(null);
+  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+  const [selectedItem, setSelectedItem] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
 
-  const handleImageUpload = async(e)=>{
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    if(!file) return;
+    if (!file) return;
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
-    reader.onload = async()=>{
+    reader.onload = async () => {
       setImageSrc(reader.result);
     }
   }
@@ -48,8 +48,8 @@ const ProfilePage = () => {
           {/* Avatar Section */}
           <div className='flex flex-col items-center gap-4'>
             <div className='relative'>
-              <img src={selectedItem|| authUser.profilePic || "/avatar.png"} alt="Profile" className='size-32 rounded-full object-cover border-4' />
-              <label htmlFor="avatar-upload" className={`absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 ${isUpdatingProfile ? "animate-pulse pointer-events-none":""}`}>
+              <img src={selectedItem || authUser.profilePic || "/avatar.png"} onError={(e) => { e.target.src = "/avatar.png" }} alt="Profile" className='size-32 rounded-full object-cover border-4' />
+              <label htmlFor="avatar-upload" className={`absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}`}>
                 <Camera className='w-5 h-5 text-base-200'></Camera>
                 <input type="file" id='avatar-upload' className='hidden' accept='image/*' onChange={handleImageUpload} disabled={isUpdatingProfile} />
               </label>
@@ -93,7 +93,7 @@ const ProfilePage = () => {
               </div>
             )}
 
-            <p className='text-sm text-zinc-400'>{isUpdatingProfile?"Uploading....":"Click the camera icon to update your profile photo"}</p>
+            <p className='text-sm text-zinc-400'>{isUpdatingProfile ? "Uploading...." : "Click the camera icon to update your profile photo"}</p>
           </div>
           <div className='space-y-6'>
             <div className='space-y-1.5'>

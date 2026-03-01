@@ -13,8 +13,17 @@ const userSchema = new mongoose.Schema(
         },
         password:{
             type:String,
-            required:true,
-            minlength:6
+            required:false,
+            minlength:6,
+            default: null
+        },
+        googleId: {
+            type: String,
+            default: null,   // 👈 For OAuth users
+        },
+        provider: {
+            type: String,
+            default: "local",  // "local" or "google"
         },
         profilePic:{
             type:String,

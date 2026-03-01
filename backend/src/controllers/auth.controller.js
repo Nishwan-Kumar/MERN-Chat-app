@@ -129,7 +129,7 @@ export const googleCallback = async (req, res) => {
         generate_token(user._id, res);
 
         // Redirect to frontend home page
-        res.redirect("http://localhost:5173");
+        res.redirect(process.env.FRONTEND_URL || "http://localhost:5173");
 
     } catch (error) {
         console.log("Error in Google OAuth", error.message);

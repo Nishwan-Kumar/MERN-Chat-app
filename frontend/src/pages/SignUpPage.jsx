@@ -121,7 +121,7 @@ const SignUpPage = () => {
 
                     {/* Google OAuth Button */}
                     <a
-                        href='http://localhost:5001/api/auth/google'
+                        href={`${import.meta.env.VITE_BACKEND_URL || ""}/api/auth/google`}
                         className='btn btn-outline w-full flex items-center gap-2'
                     >
                         <img

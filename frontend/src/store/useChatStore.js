@@ -60,6 +60,7 @@ export const useChatStore = create((set,get)=>({
                 messages:[...get().messages,newMessage]
             })
         })
+        
     },
     notListenToMessages:()=>{
         const socket = useAuthStore.getState().socket

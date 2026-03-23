@@ -93,6 +93,21 @@ export const useAuthStore = create((set,get)=>({
         socket.on("getOnlineUsers",(userId)=>{
             set({onlineUsers:userId})
         })
+
+        socket.on("connect", () => {
+            console.log("✅ Socket connected:", socket.id);
+
+            const start = Date.now();
+
+            socket.emit("pingTest", start);
+
+            socket.off("pongTest"); // prevent duplicates
+
+            socket.on("pongTest", (startTime) => {
+                const latency = Date.now() - startTime;
+                console.log("🔥 Socket Latency:", latency, "ms");
+            });
+        });
     },
     disconnectSocket:()=>{
         if(get().socket?.connected) get().socket.disconnect()

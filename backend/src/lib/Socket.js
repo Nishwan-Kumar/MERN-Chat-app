@@ -30,6 +30,9 @@ io.on("connection", (socket) => {
         delete userSocketMap[userId];
         io.emit("getOnlineUsers", Object.keys(userSocketMap))
     })
+    socket.on("pingTest", (startTime) => {
+        socket.emit("pongTest", startTime);
+    });
 })
 
 export { io, app, server }

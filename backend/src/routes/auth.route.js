@@ -1,5 +1,5 @@
 import express from "express";
-import { login, logout, signup, updateProfile, checkAuth } from "../controllers/auth.controller.js";
+import { login, logout, signup, updateProfile, checkAuth,forgotPassword, resetPassword } from "../controllers/auth.controller.js";
 import { protectedRoute } from "../middleware/auth.middleware.js";
 import passport from "passport";
 import { googleCallback } from "../controllers/auth.controller.js";
@@ -26,5 +26,8 @@ router.get(
   passport.authenticate("google", { session: false }),
   googleCallback
 );
+
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 
 export default router;

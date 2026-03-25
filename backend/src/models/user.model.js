@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
     {
@@ -28,12 +29,21 @@ const userSchema = new mongoose.Schema(
         profilePic:{
             type:String,
             default:""
+        },
+        passwordResetToken: {
+            type: String,
+            default: undefined
+        },
+        passwordResetExpires: {
+            type: Date,
+            default: undefined
         }
     },
     {
         timestamps:true
     }
 );
+
 
 const User = mongoose.model("user",userSchema);
 

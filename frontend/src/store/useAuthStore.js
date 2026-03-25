@@ -12,6 +12,8 @@ export const useAuthStore = create((set,get)=>({
     isCheckingAuth:true,
     onlineUsers:[],
     socket:null,
+    isSendingResetEmail: false,
+    isResettingPassword: false,
 
     checkAuth:async()=>{
         try{
@@ -76,6 +78,35 @@ export const useAuthStore = create((set,get)=>({
             toast.error(err.response.data.message);
         }finally{
             set({isUpdatingProfile:false})
+        }
+    },
+
+    forgotPassword: async (email) => {
+        set({ isSendingResetEmail: true });
+        try {
+            // Notice we use /auth/ because your other routes use it (e.g., /auth/login)
+            const res = await axiosInstance.post("/auth/forgot-password", { email });
+            toast.success(res.data.message || "Reset link sent successfully!");
+            return true;
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to send reset link");
+            return false;
+        } finally {
+            set({ isSendingResetEmail: false });
+        }
+    },
+
+    resetPassword: async (token, password) => {
+        set({ isResettingPassword: true });
+        try {
+            const res = await axiosInstance.post(`/auth/reset-password/${token}`, { password });
+            toast.success("Password reset successfully!");
+            return true;
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Reset failed");
+            return false;
+        } finally {
+            set({ isResettingPassword: false });
         }
     },
 

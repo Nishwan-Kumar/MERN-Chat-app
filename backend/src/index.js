@@ -9,6 +9,7 @@ import { app, server } from "./lib/Socket.js";
 import path from 'path';
 import session from "express-session";
 import passport from "./lib/passport.js";
+import errorHandler from "./middleware/error.middleware.js"
 
 dotenv.config()
 
@@ -45,6 +46,8 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
+
+app.use(errorHandler);
 
 const startServer = async () => {
   try {

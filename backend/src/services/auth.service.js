@@ -77,7 +77,7 @@ export const login = async ({email,password}) => {
     },token};
 };
 
-export const googleCallback = async ({user}) => {
+export const googleCallback = async (user) => {
     const token = generate_token(user._id);
     logEvent({
         userId: user._id,
@@ -85,7 +85,7 @@ export const googleCallback = async ({user}) => {
         message: "User logged in via Google",
     });
 
-    return {token}
+    return token
     
 }
 

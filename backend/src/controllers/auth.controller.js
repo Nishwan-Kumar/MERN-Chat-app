@@ -33,7 +33,7 @@ export const login = async (req, res, next) => {
 
 export const googleCallback = async (req, res, next) => {
     try {
-        const {token} = await authService.googleCallback(req.user); // Passport sets this
+        const token = await authService.googleCallback(req.user); // Passport sets this
 
         res.cookie("jwt", token, cookieOptions);
 
